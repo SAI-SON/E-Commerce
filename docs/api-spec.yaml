@@ -1,0 +1,356 @@
+openapi: 3.0.3
+info:
+  title: Vastra Clothing & Accessories API
+  version: 1.0.0
+  description: Complete RESTful API specification for Vastra e-commerce store, supporting customer storefront journeys, authenticated sessions, transactional checkout, and protected administrative operations.
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Local Development Server
+
+paths:
+  /health:
+    get:
+      summary: System Health & Database Check
+      responses:
+        '200':
+          description: Service and database operational
+
+  /products:
+    get:
+      summary: Search, filter, and paginate catalogue
+      parameters:
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: size
+          schema: { type: string }
+        - in: query
+          name: colour
+          schema: { type: string }
+        - in: query
+          name: minPrice
+          schema: { type: number }
+        - in: query
+          name: maxPrice
+          schema: { type: number }
+        - in: query
+          name: inStock
+          schema: { type: boolean }
+        - in: query
+          name: sort
+          schema: { type: string, enum: [newest, price_asc, price_desc, popular] }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 12 }
+      responses:
+        '200':
+          description: Paginated product list
+
+  /products/filters:
+    get:
+      summary: Dynamic filter options and boundaries
+      responses:
+        '200':
+          description: Available sizes, colours, and price range
+
+  /products/{slug}:
+    get:
+      summary: Product details by slug
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Complete product details with variants and images
+        '404':
+          description: Product not found
+
+  /categories:
+    get:
+      summary: Category hierarchy
+      responses:
+        '200':
+          description: List of categories
+
+  /auth/register:
+    post:
+      summary: Register customer account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, firstName, lastName]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                firstName: { type: string }
+                lastName: { type: string }
+                phone: { type: string }
+      responses:
+        '201':
+          description: Customer registered successfully
+        '409':
+          description: Email already in use
+
+  /auth/login:
+    post:
+      summary: Authenticate user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        '200':
+          description: Authentication token and user profile returned
+        '401':
+          description: Invalid credentials
+
+  /auth/me:
+    get:
+      summary: Retrieve current authenticated session
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile
+        '401':
+          description: Unauthenticated
+
+  /cart:
+    get:
+      summary: Retrieve authoritative cart calculations
+      responses:
+        '200':
+          description: Cart items, subtotals, shipping, and discount
+
+  /cart/items:
+    post:
+      summary: Add item to cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [variantId, quantity]
+              properties:
+                variantId: { type: string, format: uuid }
+                quantity: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Item added
+        '400':
+          description: Out of stock or invalid quantity
+
+  /cart/coupon:
+    post:
+      summary: Apply promotional coupon code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              properties:
+                code: { type: string }
+      responses:
+        '200':
+          description: Coupon validated and discount calculated
+        '400':
+          description: Invalid, expired, or threshold not met
+
+  /orders:
+    post:
+      summary: Place order via transactional checkout
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [customerEmail, customerPhone, shippingAddress]
+              properties:
+                customerEmail: { type: string, format: email }
+                customerPhone: { type: string }
+                couponCode: { type: string }
+                notes: { type: string }
+                shippingAddress:
+                  type: object
+                  required: [fullName, phone, streetAddress, city, state, postalCode, country]
+                  properties:
+                    fullName: { type: string }
+                    phone: { type: string }
+                    streetAddress: { type: string }
+                    apartment: { type: string }
+                    city: { type: string }
+                    state: { type: string }
+                    postalCode: { type: string }
+                    country: { type: string }
+      responses:
+        '201':
+          description: Order created inside database transaction
+        '400':
+          description: Inventory out of stock or validation error
+
+    get:
+      summary: List authenticated customer orders
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Customer order history
+
+  /orders/{orderNumber}:
+    get:
+      summary: Retrieve order receipt and tracking breakdown
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: orderNumber
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Order details
+        '404':
+          description: Order not found or ownership mismatch
+
+  /wishlist:
+    get:
+      summary: Retrieve customer wishlist
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of saved items
+
+  /wishlist/toggle/{productId}:
+    post:
+      summary: Add or remove product from wishlist
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Wishlist state toggled
+
+  /admin/dashboard:
+    get:
+      summary: Admin store performance metrics
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Real database KPIs (gross sales, orders, low stock, leaderboards)
+        '403':
+          description: Forbidden - Admin role required
+
+  /admin/products:
+    get:
+      summary: Admin product list with variant counts
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: All products
+    post:
+      summary: Create new product with variants and images
+      security:
+        - BearerAuth: []
+      responses:
+        '201':
+          description: Product created and audit logged
+
+  /admin/variants/{variantId}/stock:
+    patch:
+      summary: Adjust stock with mandatory audit reason
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: variantId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [adjustment, reason]
+              properties:
+                adjustment: { type: integer }
+                reason: { type: string, minLength: 3 }
+      responses:
+        '200':
+          description: Stock updated and logged in InventoryMovement
+        '400':
+          description: Negative stock disallowed
+
+  /admin/orders:
+    get:
+      summary: Admin order management list
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Orders matching filter
+  /admin/orders/{id}/status:
+    patch:
+      summary: Execute order status state transition
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUNDED]
+                notes: { type: string }
+      responses:
+        '200':
+          description: Status transitioned according to state machine rules
+        '400':
+          description: Invalid transition
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
