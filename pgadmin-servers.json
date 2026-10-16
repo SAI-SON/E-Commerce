@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Vastra E-Commerce DB",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "localhost",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "vastra_db"
+    }
+  }
+}

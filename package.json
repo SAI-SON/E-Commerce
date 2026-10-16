@@ -15,7 +15,11 @@
     "test": "npm run test --workspace=server && npm run test --workspace=client",
     "db:migrate": "npm run prisma:migrate --workspace=server",
     "db:seed": "npm run prisma:seed --workspace=server",
-    "db:studio": "npm run prisma:studio --workspace=server"
+    "db:studio": "npm run prisma:studio --workspace=server",
+    "db:check": "tsx scripts/db-check.ts",
+    "db:psql": "scripts\\connect-psql.bat",
+    "db:backup": "scripts\\db-backup.bat",
+    "db:pgadmin": "scripts\\open-pgadmin.bat"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
