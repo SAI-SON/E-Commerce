@@ -201,7 +201,7 @@ export const Register: React.FC = () => {
                   fontSize: '1.25rem',
                 }}
               >
-                VASTRA ATELIER
+                TANTUVI ATELIER
               </Typography>
               <Typography
                 variant="h5"
@@ -212,7 +212,7 @@ export const Register: React.FC = () => {
                   fontSize: '1.2rem',
                 }}
               >
-                Join the Vastra Collective
+                Join the Tantuvi Collective
               </Typography>
               <Typography variant="body2" sx={{ color: '#6B655F', fontSize: '0.8rem', mt: 0.5 }}>
                 Real-time account setup with verified artisan orders & express checkout

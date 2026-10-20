@@ -168,7 +168,7 @@ export const Home: React.FC = () => {
                 Clothing Crafted to Breathe with Your Body
               </h2>
               <p className="text-sm text-vastra-muted leading-relaxed">
-                Conventional synthetic garments stifle natural prana and trap heat. Vastra designs
+                Conventional synthetic garments stifle natural prana and trap heat. Tantuvi Atelier designs
                 wear using exclusively unbleached, hand-spun GOTS cotton, wild forest Tussar silk,
                 and pure European flax linen. Woven patiently on non-electric wooden pit looms, each
                 garment softens into second-skin comfort.

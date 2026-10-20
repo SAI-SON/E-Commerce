@@ -61,10 +61,10 @@ export const Header: React.FC = () => {
             <Link to="/" className="inline-block group">
               <div className="flex flex-col items-center lg:items-start">
                 <span className="font-serif text-2xl sm:text-3xl font-bold tracking-widest text-vastra-charcoal group-hover:text-vastra-terracotta transition-colors">
-                  VASTRA
+                  TANTUVI
                 </span>
                 <span className="text-[9px] tracking-[0.25em] text-vastra-muted uppercase -mt-1 font-sans">
-                  Artisanal Wear & Living
+                  Atelier of Master Weavers
                 </span>
               </div>
             </Link>

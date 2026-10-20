@@ -75,16 +75,16 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" onClick={scrollToTop} className="inline-block">
               <span className="font-serif text-2xl font-bold tracking-widest text-vastra-charcoal">
-                VASTRA
+                TANTUVI
               </span>
             </Link>
             <p className="text-sm text-vastra-muted leading-relaxed max-w-sm">
-              Vastra honors the sacred heritage of Indian handlooms, Ayurvedic natural dyes, and
+              Tantuvi Atelier honors the sacred heritage of Indian handlooms, Ayurvedic natural dyes, and
               temple metalcraft. Designed for pure living, mindful meditation, and effortless modern grace.
             </p>
             <div className="pt-2 text-xs text-vastra-light space-y-1">
               <p>Handcrafted across Tamil Nadu, Bengal, Varanasi & Kashmir</p>
-              <p>support@vastrastore.com | +91 (80) 4123-8900</p>
+              <p>support@tantuvi.com | +91 (80) 4123-8900</p>
             </div>
           </div>
 
@@ -235,7 +235,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-vastra-border/60 flex flex-col sm:flex-row items-center justify-between text-xs text-vastra-light gap-4">
-          <p>© {new Date().getFullYear()} Vastra — Clothing & Accessories Store. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Tantuvi Atelier — Handcrafted Clothing & Living. All rights reserved.</p>
           <div className="flex items-center space-x-6">
             <span>Verified Secure Checkout</span>
             <span>Handmade with Devotion in India</span>

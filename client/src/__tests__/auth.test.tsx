@@ -123,7 +123,7 @@ describe('Supabase Authentication & Security Best Practices', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('VASTRA ATELIER')).toBeInTheDocument();
+    expect(screen.getByText('TANTUVI ATELIER')).toBeInTheDocument();
     expect(screen.getByText('Sign In to Your Account')).toBeInTheDocument();
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password \*/i)).toBeInTheDocument();
@@ -140,7 +140,7 @@ describe('Supabase Authentication & Security Best Practices', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Join the Vastra Collective')).toBeInTheDocument();
+    expect(screen.getByText('Join the Tantuvi Collective')).toBeInTheDocument();
     expect(screen.getByLabelText(/First Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();

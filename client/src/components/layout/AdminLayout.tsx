@@ -51,10 +51,10 @@ export const AdminLayout: React.FC = () => {
           </div>
           <div>
             <span className="font-serif text-lg font-bold tracking-wider text-white block">
-              VASTRA
+              TANTUVI
             </span>
             <span className="text-[10px] uppercase tracking-widest text-stone-400 block -mt-1">
-              Store Control Panel
+              Atelier Control Panel
             </span>
           </div>
         </div>

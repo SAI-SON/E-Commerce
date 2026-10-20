@@ -180,7 +180,7 @@ export const Login: React.FC = () => {
                   fontSize: '1.25rem',
                 }}
               >
-                VASTRA ATELIER
+                TANTUVI ATELIER
               </Typography>
               <Typography
                 variant="h5"
@@ -429,7 +429,7 @@ export const Login: React.FC = () => {
             {/* Footer */}
             <Box sx={{ textAlign: 'center', mt: 4, pt: 2.5, borderTop: '1px solid #EAE4D9' }}>
               <Typography variant="body2" sx={{ color: '#6B655F', fontSize: '0.8rem' }}>
-                New to Vastra?{' '}
+                New to Tantuvi?{' '}
                 <Link
                   to="/register"
                   style={{
