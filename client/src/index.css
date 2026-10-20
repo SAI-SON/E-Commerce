@@ -4,41 +4,120 @@
 
 @layer base {
   :root {
-    --color-bg: #FDFBF7;
-    --color-charcoal: #22201E;
-    --color-terracotta: #8C4A2F;
-    --color-sand: #C5A880;
-    --color-olive: #4A5D4E;
+    --color-bg: #FFF9F0;
+    --color-surface: #FFFFFF;
+    --color-primary: #1E2A5E;
+    --color-primary-hover: #2B3A85;
+    --color-accent: #F2A33A;
+    --color-accent-hover: #E08E1F;
+    --color-rose: #B83A4B;
+    --color-emerald: #2E8B6E;
+    --color-ink: #15131F;
+    --color-muted: #6B6880;
+    --color-border: #EDE6DA;
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    background-color: #FDFBF7;
-    color: #22201E;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #FFF9F0;
+    color: #15131F;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+  /* Fluid Typography Scale */
+  h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.35rem, 2vw + 0.4rem, 2rem);
+    line-height: 1.25;
+  }
+
+  h4 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.15rem, 1.5vw + 0.25rem, 1.5rem);
+    line-height: 1.3;
+  }
+
+  h5, h6 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  }
+
+  /* Accessible Visible Saffron Focus Ring */
+  *:focus-visible {
+    outline: 2px solid #F2A33A !important;
+    outline-offset: 2px !important;
   }
 }
 
-/* Custom aesthetic scrollbar */
+@layer components {
+  /* Glassmorphism Styles */
+  .glass-navbar {
+    background-color: rgba(255, 249, 240, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(237, 230, 218, 0.85);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(237, 230, 218, 0.9);
+  }
+
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #F2A33A 50%, transparent 100%);
+    opacity: 0.6;
+  }
+
+  .paisley-subtle {
+    background-image: radial-gradient(#F2A33A 0.75px, transparent 0.75px);
+    background-size: 16px 16px;
+    opacity: 0.08;
+  }
+}
+
+/* Custom Aesthetic Jewel Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #FDFBF7;
+  background: #FFF9F0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #EAE4D9;
-  border-radius: 4px;
+  background: #EDE6DA;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5A880;
+  background: #F2A33A;
+}
+
+/* Accessible Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
