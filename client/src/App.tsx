@@ -32,9 +32,13 @@ import { InventoryPage } from './pages/admin/Inventory.js';
 import { OrdersPage as AdminOrdersPage } from './pages/admin/Orders.js';
 import { CouponsPage } from './pages/admin/Coupons.js';
 
+import { ScrollToTop } from './components/common/ScrollToTop.js';
+
 export const App: React.FC = () => {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       {/* Customer Storefront Routes (wrapped in MainLayout) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
@@ -90,6 +94,7 @@ export const App: React.FC = () => {
         <Route path="coupons" element={<CouponsPage />} />
       </Route>
     </Routes>
+    </>
   );
 };
 

@@ -35,8 +35,15 @@ export const createOrderSchema = z.object({
     .min(1, 'Order must contain at least one item'),
   couponCode: z.string().optional(),
   paymentMethod: z
-    .enum(['SIMULATED_UPI', 'SIMULATED_CARD', 'SIMULATED_NET_BANKING', 'CASH_ON_DELIVERY'])
-    .default('SIMULATED_UPI'),
+    .enum([
+      'RAZORPAY',
+      'ONLINE_GATEWAY',
+      'SIMULATED_UPI',
+      'SIMULATED_CARD',
+      'SIMULATED_NET_BANKING',
+      'CASH_ON_DELIVERY',
+    ])
+    .default('ONLINE_GATEWAY'),
   notes: z.string().optional(),
 });
 

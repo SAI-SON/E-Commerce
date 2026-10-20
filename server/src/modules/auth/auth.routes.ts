@@ -8,6 +8,7 @@ const router = Router();
 
 router.post('/register', validateRequest({ body: registerSchema }), AuthController.register);
 router.post('/login', validateRequest({ body: loginSchema }), AuthController.login);
+router.post('/supabase', AuthController.supabaseAuth);
 router.post('/logout', AuthController.logout);
 router.get('/me', requireAuth, AuthController.getMe);
 router.patch('/profile', requireAuth, validateRequest({ body: updateProfileSchema }), AuthController.updateProfile);

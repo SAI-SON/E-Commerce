@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Truck, RefreshCw, Sparkles, Mail, Check } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCw, Sparkles, Mail, Check, X, BookOpen, FileText } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [activeModal, setActiveModal] = useState<'care' | 'shipping' | 'privacy' | null>(null);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +73,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand Philosophy */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="inline-block">
+            <Link to="/" onClick={scrollToTop} className="inline-block">
               <span className="font-serif text-2xl font-bold tracking-widest text-vastra-charcoal">
                 VASTRA
               </span>
@@ -90,27 +95,47 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-sm text-vastra-muted">
               <li>
-                <Link to="/products?category=mens-wear" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/products?category=mens-wear"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Men's Handloom Kurtas
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=womens-wear" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/products?category=womens-wear"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Chanderi & Silk Sarees
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=dhotis" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/products?category=dhotis"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Pleated Linen Dhotis
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=jewellery" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/products?category=jewellery"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Temple Silver Jewellery
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=accessories" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/products?category=accessories"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Himalayan Pashmina
                 </Link>
               </li>
@@ -124,23 +149,49 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-sm text-vastra-muted">
               <li>
-                <Link to="/account/orders" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/account/orders"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Track Your Order
                 </Link>
               </li>
               <li>
-                <Link to="/cart" className="hover:text-vastra-terracotta transition-colors">
+                <Link
+                  to="/cart"
+                  onClick={scrollToTop}
+                  className="hover:text-vastra-terracotta transition-colors"
+                >
                   Shopping Bag
                 </Link>
               </li>
               <li>
-                <span className="cursor-default">Natural Fabric Care Guide</span>
+                <button
+                  type="button"
+                  onClick={() => setActiveModal('care')}
+                  className="hover:text-vastra-terracotta transition-colors text-left"
+                >
+                  Natural Fabric Care Guide
+                </button>
               </li>
               <li>
-                <span className="cursor-default">Shipping & Delivery Policy</span>
+                <button
+                  type="button"
+                  onClick={() => setActiveModal('shipping')}
+                  className="hover:text-vastra-terracotta transition-colors text-left"
+                >
+                  Shipping & Delivery Policy
+                </button>
               </li>
               <li>
-                <span className="cursor-default">Privacy & Terms</span>
+                <button
+                  type="button"
+                  onClick={() => setActiveModal('privacy')}
+                  className="hover:text-vastra-terracotta transition-colors text-left"
+                >
+                  Privacy & Terms
+                </button>
               </li>
             </ul>
           </div>
@@ -191,6 +242,212 @@ export const Footer: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Customer Care Modal Dialogs */}
+      {activeModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setActiveModal(null)}
+        >
+          <div
+            className="bg-vastra-bg border border-vastra-border max-w-lg w-full p-6 sm:p-8 rounded-sm shadow-2xl relative text-vastra-charcoal max-h-[85vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveModal(null)}
+              className="absolute top-4 right-4 p-1.5 text-vastra-muted hover:text-vastra-charcoal rounded-sm hover:bg-stone-100 transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {activeModal === 'care' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-vastra-border pb-3">
+                  <div className="w-9 h-9 rounded-full bg-vastra-terracotta-light text-vastra-terracotta flex items-center justify-center">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl font-bold text-vastra-charcoal">
+                      Natural Fabric Care Guide
+                    </h3>
+                    <p className="text-xs text-vastra-muted">
+                      Honoring handloom weaves & Ayurvedic dyes
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs leading-relaxed text-vastra-charcoal/90">
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      Pure Handloom Silks & Chanderi
+                    </h4>
+                    <p>
+                      Dry clean is strongly advised for first three washes. Steam iron on low heat
+                      from the reverse side. Avoid spraying perfume or alcohol directly on natural
+                      silk fibers.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      Khadi, Linen & Organic Cotton
+                    </h4>
+                    <p>
+                      Hand wash separately in cold water with mild, pH-neutral detergent or soapnuts
+                      (reetha). Dry in shaded open breeze; never wring harshly or tumble dry.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      Temple Silver & Brass Adornments
+                    </h4>
+                    <p>
+                      Store in an airtight cloth pouch away from moisture and humidity. Polish gently
+                      with a soft dry cotton flannel; avoid chemical liquid silver dips.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal(null)}
+                    className="w-full py-2.5 bg-vastra-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-vastra-terracotta transition-colors"
+                  >
+                    Close Guide
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeModal === 'shipping' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-vastra-border pb-3">
+                  <div className="w-9 h-9 rounded-full bg-vastra-olive-light text-vastra-olive flex items-center justify-center">
+                    <Truck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl font-bold text-vastra-charcoal">
+                      Shipping & Delivery Policy
+                    </h3>
+                    <p className="text-xs text-vastra-muted">
+                      Conscious packaging & reliable dispatch
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs leading-relaxed text-vastra-charcoal/90">
+                  <div>
+                    <h4 className="font-semibold text-vastra-olive uppercase tracking-wider text-[11px]">
+                      Complimentary Domestic Shipping
+                    </h4>
+                    <p>
+                      We offer free insured delivery on all domestic orders above ₹1,999. For orders
+                      below ₹1,999, a nominal flat rate of ₹99 is applied at checkout.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-olive uppercase tracking-wider text-[11px]">
+                      Dispatch & Transit Timelines
+                    </h4>
+                    <p>
+                      Every piece is mindfully inspected and packed in plastic-free recycled paper.
+                      Orders dispatch within 24–48 business hours. Expected delivery is 3–5 working
+                      days for tier-1 cities, and 5–7 days for pan-India destinations.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-olive uppercase tracking-wider text-[11px]">
+                      Live Order Tracking
+                    </h4>
+                    <p>
+                      Once your parcel leaves our artisan hub, a tracking number and courier link
+                      are instantly dispatched to your registered SMS and email address.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal(null)}
+                    className="w-full py-2.5 bg-vastra-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-vastra-terracotta transition-colors"
+                  >
+                    Got It
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeModal === 'privacy' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-vastra-border pb-3">
+                  <div className="w-9 h-9 rounded-full bg-vastra-sand-light text-vastra-sand flex items-center justify-center">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl font-bold text-vastra-charcoal">
+                      Privacy & Terms of Heritage
+                    </h3>
+                    <p className="text-xs text-vastra-muted">
+                      Security, fair trade & data protection
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs leading-relaxed text-vastra-charcoal/90">
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      100% Artisan Provenance Guarantee
+                    </h4>
+                    <p>
+                      Every garment is accompanied by an authenticity promise guaranteeing fair
+                      wages directly paid to weaver clusters in Varanasi, Bengal, and Tamil Nadu.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      Mindful 7-Day Exchange
+                    </h4>
+                    <p>
+                      If a fit does not suit your comfort, return or exchange unwashed garments with
+                      original tags intact within 7 calendar days from delivery.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-vastra-terracotta uppercase tracking-wider text-[11px]">
+                      Confidentiality & Payment Safety
+                    </h4>
+                    <p>
+                      Your data is protected under 256-bit encryption. We never rent or monetize
+                      your email, address, or purchase history with third-party advertising brokers.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal(null)}
+                    className="w-full py-2.5 bg-vastra-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-vastra-terracotta transition-colors"
+                  >
+                    I Understand
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

@@ -15,10 +15,16 @@ export const config = {
     secret: process.env.COOKIE_SECRET || 'vastra_cookie_dev_secret',
   },
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: (process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:5173')
+      .split(',')
+      .map((origin) => origin.trim()),
   },
   rateLimit: {
     windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
     max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000', 10),
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL || 'https://rfthmlmaismtyukxpyld.supabase.co',
+    serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
   },
 };

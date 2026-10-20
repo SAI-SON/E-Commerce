@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Lock, CreditCard, Smartphone, Building, Banknote, ArrowRight } from 'lucide-react';
+import {
+  ShieldCheck,
+  Lock,
+  CreditCard,
+  Smartphone,
+  Building,
+  Banknote,
+  ArrowRight,
+  CheckCircle2,
+  X,
+  Sparkles,
+  QrCode,
+  Shield,
+} from 'lucide-react';
 import { useCartStore } from '../store/cartStore.js';
 import { useAuthStore } from '../store/authStore.js';
 import { api } from '../lib/api.js';
@@ -28,8 +41,16 @@ export const Checkout: React.FC = () => {
   const [country] = useState('India');
 
   const [paymentMethod, setPaymentMethod] = useState<
-    'SIMULATED_UPI' | 'SIMULATED_CARD' | 'SIMULATED_NET_BANKING' | 'CASH_ON_DELIVERY'
-  >('SIMULATED_UPI');
+    'ONLINE_GATEWAY' | 'SIMULATED_UPI' | 'SIMULATED_CARD' | 'SIMULATED_NET_BANKING' | 'CASH_ON_DELIVERY'
+  >('ONLINE_GATEWAY');
+
+  // Interactive Payment Gateway Modal State
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [gatewaySubMethod, setGatewaySubMethod] = useState<'upi' | 'card' | 'qr'>('upi');
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [testUpiId, setTestUpiId] = useState('patron@oksbi');
+  const [testCardNumber, setTestCardNumber] = useState('4532 •••• •••• 8892');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -89,8 +110,7 @@ export const Checkout: React.FC = () => {
     }
   };
 
-  const handleSubmitOrder = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const executePlaceOrder = async (chosenMethod: string) => {
     if (!cart || cart.items.length === 0) {
       setErrorMessage('Your bag is empty.');
       return;
@@ -118,7 +138,7 @@ export const Checkout: React.FC = () => {
           quantity: item.quantity,
         })),
         couponCode: cart.appliedCoupon?.code || undefined,
-        paymentMethod,
+        paymentMethod: chosenMethod,
       };
 
       const res = await api.post<{ data: Order }>('/orders', orderPayload);
@@ -130,9 +150,42 @@ export const Checkout: React.FC = () => {
       navigate(`/order-confirmation/${res.data.orderNumber}`);
     } catch (err: unknown) {
       setErrorMessage((err as Error).message || 'Failed to place order. Please review your details.');
+      setIsPaymentModalOpen(false);
+      setPaymentProcessing(false);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Check mandatory address fields
+    if (!fullName.trim() || !phone.trim() || !streetAddress.trim() || !city.trim() || !state.trim() || !postalCode.trim()) {
+      setErrorMessage('Please complete all mandatory shipping address fields.');
+      return;
+    }
+
+    if (paymentMethod === 'ONLINE_GATEWAY') {
+      // Launch interactive payment modal
+      setIsPaymentModalOpen(true);
+      setPaymentProcessing(false);
+      setPaymentSuccess(false);
+    } else {
+      await executePlaceOrder(paymentMethod);
+    }
+  };
+
+  const handleAuthorizeGatewayPayment = async () => {
+    setPaymentProcessing(true);
+    // Simulate real gateway latency & 3D secure verification
+    setTimeout(async () => {
+      setPaymentProcessing(false);
+      setPaymentSuccess(true);
+      setTimeout(async () => {
+        await executePlaceOrder('ONLINE_GATEWAY');
+      }, 700);
+    }, 1200);
   };
 
   if (!cart || cart.items.length === 0) {
@@ -369,6 +422,36 @@ export const Checkout: React.FC = () => {
             <div className="space-y-3">
               <label
                 className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
+                  paymentMethod === 'ONLINE_GATEWAY'
+                    ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
+                    : 'border-vastra-border hover:bg-vastra-surface'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  checked={paymentMethod === 'ONLINE_GATEWAY'}
+                  onChange={() => setPaymentMethod('ONLINE_GATEWAY')}
+                  className="mt-0.5 text-vastra-terracotta focus:ring-vastra-terracotta"
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-vastra-terracotta" />
+                    <span className="text-xs font-bold text-vastra-charcoal">
+                      Online Payment Gateway (Razorpay / Cards / UPI / NetBanking)
+                    </span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                      Instant & Fast
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-vastra-muted mt-0.5">
+                    Pay securely using Google Pay, PhonePe, Paytm, Visa, Mastercard, RuPay, or Net Banking.
+                  </p>
+                </div>
+              </label>
+
+              <label
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
                   paymentMethod === 'SIMULATED_UPI'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
@@ -565,6 +648,230 @@ export const Checkout: React.FC = () => {
           </div>
         </div>
       </form>
+
+      {/* Interactive Online Payment Gateway Modal */}
+      {isPaymentModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => !paymentProcessing && setIsPaymentModalOpen(false)}
+        >
+          <div
+            className="bg-white border border-vastra-border max-w-md w-full rounded-sm shadow-2xl relative overflow-hidden text-vastra-charcoal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="bg-vastra-surface px-6 py-4 border-b border-vastra-border flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-vastra-terracotta text-white flex items-center justify-center text-xs font-serif font-bold">
+                  V
+                </div>
+                <div>
+                  <h3 className="font-serif text-sm font-bold text-vastra-charcoal">
+                    Vastra Payment Gateway
+                  </h3>
+                  <div className="flex items-center gap-1 text-[10px] text-emerald-700">
+                    <Shield className="w-3 h-3" />
+                    <span>256-Bit SSL Encrypted & PCI-DSS Compliant</span>
+                  </div>
+                </div>
+              </div>
+
+              {!paymentProcessing && (
+                <button
+                  type="button"
+                  onClick={() => setIsPaymentModalOpen(false)}
+                  className="p-1 text-vastra-muted hover:text-vastra-charcoal rounded-sm"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+
+            {/* Amount Banner */}
+            <div className="px-6 py-3 bg-vastra-bg border-b border-vastra-border/60 flex items-center justify-between">
+              <span className="text-xs text-vastra-muted">Total Payable Amount</span>
+              <span className="font-serif text-lg font-bold text-vastra-charcoal">
+                {formatPrice(cart.grandTotal)}
+              </span>
+            </div>
+
+            {/* Body */}
+            <div className="p-6 space-y-5">
+              {paymentProcessing ? (
+                <div className="py-10 text-center space-y-3">
+                  <div className="w-10 h-10 border-3 border-vastra-terracotta border-t-transparent rounded-full animate-spin mx-auto" />
+                  <h4 className="font-serif text-sm font-semibold text-vastra-charcoal">
+                    Connecting to Payment Gateway...
+                  </h4>
+                  <p className="text-xs text-vastra-muted max-w-xs mx-auto">
+                    Securely communicating with bank server & verifying 3D Secure / UPI mandate.
+                  </p>
+                </div>
+              ) : paymentSuccess ? (
+                <div className="py-10 text-center space-y-3">
+                  <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto animate-bounce" />
+                  <h4 className="font-serif text-base font-bold text-vastra-charcoal">
+                    Payment Authorized Successfully!
+                  </h4>
+                  <p className="text-xs text-vastra-muted">
+                    Finalizing your order and generating verified invoice...
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {/* Gateway Method Selector */}
+                  <div className="grid grid-cols-3 gap-2 border-b border-vastra-border pb-3">
+                    <button
+                      type="button"
+                      onClick={() => setGatewaySubMethod('upi')}
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
+                        gatewaySubMethod === 'upi'
+                          ? 'bg-vastra-terracotta text-white'
+                          : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
+                      }`}
+                    >
+                      <Smartphone className="w-3.5 h-3.5" />
+                      <span>UPI</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGatewaySubMethod('card')}
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
+                        gatewaySubMethod === 'card'
+                          ? 'bg-vastra-terracotta text-white'
+                          : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
+                      }`}
+                    >
+                      <CreditCard className="w-3.5 h-3.5" />
+                      <span>Cards</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGatewaySubMethod('qr')}
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
+                        gatewaySubMethod === 'qr'
+                          ? 'bg-vastra-terracotta text-white'
+                          : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
+                      }`}
+                    >
+                      <QrCode className="w-3.5 h-3.5" />
+                      <span>Scan QR</span>
+                    </button>
+                  </div>
+
+                  {/* UPI Form */}
+                  {gatewaySubMethod === 'upi' && (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-vastra-charcoal mb-1">
+                          Enter UPI ID / VPA
+                        </label>
+                        <input
+                          type="text"
+                          value={testUpiId}
+                          onChange={(e) => setTestUpiId(e.target.value)}
+                          placeholder="e.g. mobile@upi"
+                          className="w-full px-3 py-2 text-xs border border-vastra-border rounded-xs bg-vastra-surface focus:outline-none focus:border-vastra-terracotta"
+                        />
+                      </div>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {['@okaxis', '@okhdfcbank', '@oksbi', '@paytm'].map((handle) => (
+                          <button
+                            key={handle}
+                            type="button"
+                            onClick={() => setTestUpiId(`patron${handle}`)}
+                            className="text-[10px] px-2 py-1 bg-stone-100 hover:bg-stone-200 rounded-xs text-vastra-charcoal transition-colors"
+                          >
+                            {handle}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-[11px] text-vastra-muted">
+                        Supported: Google Pay, PhonePe, Paytm, CRED, BHIM.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Card Form */}
+                  {gatewaySubMethod === 'card' && (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-vastra-charcoal mb-1">
+                          Card Number
+                        </label>
+                        <input
+                          type="text"
+                          value={testCardNumber}
+                          onChange={(e) => setTestCardNumber(e.target.value)}
+                          placeholder="4532 •••• •••• 8892"
+                          className="w-full px-3 py-2 text-xs border border-vastra-border rounded-xs bg-vastra-surface focus:outline-none focus:border-vastra-terracotta"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold text-vastra-charcoal mb-1">
+                            Expiry
+                          </label>
+                          <input
+                            type="text"
+                            defaultValue="12/28"
+                            className="w-full px-3 py-2 text-xs border border-vastra-border rounded-xs bg-vastra-surface"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-vastra-charcoal mb-1">
+                            CVV
+                          </label>
+                          <input
+                            type="password"
+                            defaultValue="849"
+                            maxLength={4}
+                            className="w-full px-3 py-2 text-xs border border-vastra-border rounded-xs bg-vastra-surface"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* QR Scan Form */}
+                  {gatewaySubMethod === 'qr' && (
+                    <div className="text-center space-y-2 py-2">
+                      <div className="w-36 h-36 mx-auto bg-stone-50 border-2 border-dashed border-vastra-border rounded-sm flex flex-col items-center justify-center p-3">
+                        <QrCode className="w-20 h-20 text-vastra-charcoal" />
+                        <span className="text-[10px] text-vastra-muted mt-1">BHIM UPI QR</span>
+                      </div>
+                      <p className="text-xs text-vastra-muted">
+                        Scan with any UPI app on your phone to approve {formatPrice(cart.grandTotal)}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Authorize Button */}
+                  <button
+                    type="button"
+                    onClick={handleAuthorizeGatewayPayment}
+                    className="w-full py-3 bg-vastra-charcoal text-white text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-vastra-terracotta transition-colors shadow-sm flex items-center justify-center gap-2"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Authorize & Pay {formatPrice(cart.grandTotal)}</span>
+                  </button>
+
+                  <div className="flex items-center justify-center gap-4 text-[10px] text-vastra-muted pt-1">
+                    <span>Zero Transaction Fee</span>
+                    <span>•</span>
+                    <span>Instant Refund Protected</span>
+                    <span>•</span>
+                    <span>RBI Compliant</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

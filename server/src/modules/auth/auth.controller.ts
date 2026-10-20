@@ -77,4 +77,26 @@ export class AuthController {
       next(error);
     }
   }
+
+  static async supabaseAuth(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { user, token } = await AuthService.supabaseAuth(req.body);
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: config.env === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Authenticated with Supabase successfully',
+        data: { user, token },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
+

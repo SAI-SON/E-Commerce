@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink, Outlet, Navigate, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { User, MapPin, Package, Heart, LogOut } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore.js';
 
 export const AccountLayout: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated, isLoading, logout } = useAuthStore();
 
   if (isLoading) {
@@ -16,7 +17,7 @@ export const AccountLayout: React.FC = () => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   const navItems = [

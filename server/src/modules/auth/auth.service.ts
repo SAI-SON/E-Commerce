@@ -128,4 +128,54 @@ export class AuthService {
     });
     return user;
   }
+
+  static async supabaseAuth(data: {
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    provider?: string;
+  }) {
+    if (!data.email) {
+      throw new AppError('Email is required for authentication', 400);
+    }
+
+    const normalizedEmail = data.email.toLowerCase().trim();
+
+    // Check if user exists in database
+    let user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    if (!user) {
+      // First-time Supabase user: Create in database with secure random password hash
+      const randomPassword = `sb_${Date.now()}_${Math.random().toString(36).substring(2)}`;
+      const passwordHash = await bcrypt.hash(randomPassword, 10);
+      const firstName = data.firstName?.trim() || normalizedEmail.split('@')[0];
+      const lastName = data.lastName?.trim() || '';
+
+      user = await prisma.user.create({
+        data: {
+          email: normalizedEmail,
+          passwordHash,
+          firstName,
+          lastName,
+          role: Role.CUSTOMER,
+        },
+      });
+    }
+
+    const token = this.generateToken(user);
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+      phone: user.phone,
+      createdAt: user.createdAt,
+    };
+
+    return { user: safeUser, token };
+  }
 }
+

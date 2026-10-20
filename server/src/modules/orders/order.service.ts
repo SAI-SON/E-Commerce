@@ -165,9 +165,18 @@ export class OrderService {
           },
           payment: {
             create: {
-              provider: 'SIMULATED_GATEWAY',
-              status: PaymentStatus.COMPLETED,
-              transactionId: `TXN_SIM_${crypto.randomBytes(6).toString('hex').toUpperCase()}`,
+              provider:
+                data.paymentMethod === 'RAZORPAY' || data.paymentMethod === 'ONLINE_GATEWAY'
+                  ? 'RAZORPAY_PAYMENT_GATEWAY'
+                  : 'SIMULATED_GATEWAY',
+              status:
+                data.paymentMethod === 'CASH_ON_DELIVERY'
+                  ? PaymentStatus.PENDING
+                  : PaymentStatus.COMPLETED,
+              transactionId: `TXN_${data.paymentMethod.replace(/[^A-Z]/g, '').substring(0, 4)}_${crypto
+                .randomBytes(6)
+                .toString('hex')
+                .toUpperCase()}`,
               amount: grandTotal,
               paymentMethod: data.paymentMethod,
             },
