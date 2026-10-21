@@ -1,13 +1,30 @@
-# Vastra — Clothing & Accessories Store
+# 🛍️ Vastra — Clothing & Accessories Store
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Storefront-black?logo=vercel&logoColor=white)](https://e-commerce-seven-navy-77.vercel.app/)
-[![Render API](https://img.shields.io/badge/Render-Live%20API-46E3B7?logo=render&logoColor=white)](https://vastra-api-lesr.onrender.com/api/v1/health)
-[![Supabase DB](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%203-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+<p align="center">
+  <a href="https://e-commerce-seven-navy-77.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐_LIVE_DEMO_STOREFRONT-VISIT_NOW-8C4A2F?style=for-the-badge&logo=vercel&logoColor=white" height="36" alt="Live Demo Storefront" />
+  </a>
+  &nbsp;
+  <a href="https://vastra-api-lesr.onrender.com/api/v1/health" target="_blank">
+    <img src="https://img.shields.io/badge/⚙️_BACKEND_API-HEALTHY-00B37E?style=for-the-badge&logo=render&logoColor=white" height="36" alt="Live Backend API" />
+  </a>
+</p>
+
+> 🔗 **Live Storefront Demo**: [**https://e-commerce-seven-navy-77.vercel.app**](https://e-commerce-seven-navy-77.vercel.app/)  
+> ⚙️ **Production REST API**: [**https://vastra-api-lesr.onrender.com**](https://vastra-api-lesr.onrender.com)  
+> 🔑 **Demo Admin Login**: `admin@vastrastore.com` / `Admin@12345`  
+> 👤 **Demo Customer Login**: `customer@vastrastore.com` / `Customer@12345`  
+
+<p align="center">
+  <a href="https://e-commerce-seven-navy-77.vercel.app/"><img src="https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel&logoColor=white" alt="Vercel" /></a>
+  <a href="https://vastra-api-lesr.onrender.com/api/v1/health"><img src="https://img.shields.io/badge/Render-Online-46E3B7?logo=render&logoColor=white" alt="Render" /></a>
+  <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase" /></a>
+  <img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Node.js-20+-339933?logo=node.js&logoColor=white" alt="Node" />
+  <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/Tailwind-CSS%203-38B2AC?logo=tailwind-css&logoColor=white" alt="Tailwind" />
+</p>
 
 A modern, production-oriented e-commerce web platform for handcrafted clothing, pure organic linen and cotton wear, traditional Indian garments, temple jewellery, and mindful accessories. Built with a clean, serene, warm-minimalist aesthetic and powered by a robust full-stack architecture with native PostgreSQL persistence and ACID transactional integrity.
 
