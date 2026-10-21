@@ -15,7 +15,7 @@ export const config = {
     secret: process.env.COOKIE_SECRET || 'vastra_cookie_dev_secret',
   },
   cors: {
-    origin: (process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:5173')
+    origin: (process.env.CORS_ORIGIN || process.env.CLIENT_URL || 'http://localhost:3000,http://localhost:5173')
       .split(',')
       .map((origin) => origin.trim()),
   },

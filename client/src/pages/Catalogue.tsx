@@ -200,22 +200,20 @@ export const Catalogue: React.FC = () => {
           <div className="hidden sm:flex items-center border border-vastra-border rounded-sm bg-white overflow-hidden">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 transition-colors ${
-                viewMode === 'grid'
+              className={`p-2 transition-colors ${viewMode === 'grid'
                   ? 'bg-vastra-surface text-vastra-terracotta'
                   : 'text-vastra-muted hover:text-vastra-charcoal'
-              }`}
+                }`}
               aria-label="Grid view"
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 transition-colors border-l border-vastra-border ${
-                viewMode === 'list'
+              className={`p-2 transition-colors border-l border-vastra-border ${viewMode === 'list'
                   ? 'bg-vastra-surface text-vastra-terracotta'
                   : 'text-vastra-muted hover:text-vastra-charcoal'
-              }`}
+                }`}
               aria-label="List view"
             >
               <List className="w-4 h-4" />
@@ -232,68 +230,68 @@ export const Catalogue: React.FC = () => {
         currentInStock ||
         currentMinPrice !== undefined ||
         currentMaxPrice !== undefined) && (
-        <div className="flex flex-wrap items-center gap-2 mb-6 animate-fade-in">
-          <span className="text-xs text-vastra-muted">Active filters:</span>
+          <div className="flex flex-wrap items-center gap-2 mb-6 animate-fade-in">
+            <span className="text-xs text-vastra-muted">Active filters:</span>
 
-          {currentSearch && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
-              Search: "{currentSearch}"
-              <button
-                onClick={() => {
-                  const p = new URLSearchParams(searchParams);
-                  p.delete('search');
-                  setSearchParams(p);
-                }}
-              >
-                <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
-              </button>
-            </span>
-          )}
+            {currentSearch && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
+                Search: "{currentSearch}"
+                <button
+                  onClick={() => {
+                    const p = new URLSearchParams(searchParams);
+                    p.delete('search');
+                    setSearchParams(p);
+                  }}
+                >
+                  <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
+                </button>
+              </span>
+            )}
 
-          {currentCategory && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
-              Category: {categories.find((c) => c.slug === currentCategory)?.name || currentCategory}
-              <button onClick={() => handleFilterChange({ ...activeFilters, category: undefined })}>
-                <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
-              </button>
-            </span>
-          )}
+            {currentCategory && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
+                Category: {categories.find((c) => c.slug === currentCategory)?.name || currentCategory}
+                <button onClick={() => handleFilterChange({ ...activeFilters, category: undefined })}>
+                  <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
+                </button>
+              </span>
+            )}
 
-          {currentSize && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
-              Size: {currentSize}
-              <button onClick={() => handleFilterChange({ ...activeFilters, size: undefined })}>
-                <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
-              </button>
-            </span>
-          )}
+            {currentSize && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
+                Size: {currentSize}
+                <button onClick={() => handleFilterChange({ ...activeFilters, size: undefined })}>
+                  <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
+                </button>
+              </span>
+            )}
 
-          {currentColour && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
-              Colour: {currentColour}
-              <button onClick={() => handleFilterChange({ ...activeFilters, colour: undefined })}>
-                <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
-              </button>
-            </span>
-          )}
+            {currentColour && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
+                Colour: {currentColour}
+                <button onClick={() => handleFilterChange({ ...activeFilters, colour: undefined })}>
+                  <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
+                </button>
+              </span>
+            )}
 
-          {currentInStock && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
-              In Stock Only
-              <button onClick={() => handleFilterChange({ ...activeFilters, inStock: undefined })}>
-                <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
-              </button>
-            </span>
-          )}
+            {currentInStock && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-white border border-vastra-border rounded-full text-vastra-charcoal">
+                In Stock Only
+                <button onClick={() => handleFilterChange({ ...activeFilters, inStock: undefined })}>
+                  <X className="w-3 h-3 text-vastra-muted hover:text-vastra-charcoal" />
+                </button>
+              </span>
+            )}
 
-          <button
-            onClick={handleClearFilters}
-            className="text-xs text-vastra-terracotta hover:underline font-medium ml-1"
-          >
-            Clear All
-          </button>
-        </div>
-      )}
+            <button
+              onClick={handleClearFilters}
+              className="text-xs text-vastra-terracotta hover:underline font-medium ml-1"
+            >
+              Clear All
+            </button>
+          </div>
+        )}
 
       {/* Main Grid & Filters Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -338,11 +336,10 @@ export const Catalogue: React.FC = () => {
         <div className="lg:col-span-3">
           {isLoading ? (
             <div
-              className={`grid ${
-                viewMode === 'grid'
+              className={`grid ${viewMode === 'grid'
                   ? 'grid-cols-2 md:grid-cols-3'
                   : 'grid-cols-1'
-              } gap-6`}
+                } gap-6`}
             >
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="aspect-[3/4] bg-vastra-surface animate-pulse rounded-sm" />
@@ -358,11 +355,10 @@ export const Catalogue: React.FC = () => {
           ) : (
             <div className="space-y-6">
               <div
-                className={`grid ${
-                  viewMode === 'grid'
+                className={`grid ${viewMode === 'grid'
                     ? 'grid-cols-2 md:grid-cols-3'
                     : 'grid-cols-1'
-                } gap-4 sm:gap-6`}
+                  } gap-4 sm:gap-6`}
               >
                 {products.map((product) => (
                   <ProductCard

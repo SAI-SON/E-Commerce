@@ -68,11 +68,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
         <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
           <button
             onClick={() => onFilterChange({ ...activeFilters, category: undefined })}
-            className={`w-full text-left text-xs py-1.5 px-2 rounded-sm transition-colors ${
-              !activeFilters.category
+            className={`w-full text-left text-xs py-1.5 px-2 rounded-sm transition-colors ${!activeFilters.category
                 ? 'bg-vastra-terracotta-light text-vastra-terracotta font-semibold'
                 : 'text-vastra-charcoal hover:bg-vastra-surface'
-            }`}
+              }`}
           >
             All Categories
           </button>
@@ -80,11 +79,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
             <button
               key={cat.id}
               onClick={() => onFilterChange({ ...activeFilters, category: cat.slug })}
-              className={`w-full text-left text-xs py-1.5 px-2 rounded-sm transition-colors flex items-center justify-between ${
-                activeFilters.category === cat.slug
+              className={`w-full text-left text-xs py-1.5 px-2 rounded-sm transition-colors flex items-center justify-between ${activeFilters.category === cat.slug
                   ? 'bg-vastra-terracotta-light text-vastra-terracotta font-semibold'
                   : 'text-vastra-charcoal hover:bg-vastra-surface'
-              }`}
+                }`}
             >
               <span>{cat.name}</span>
               {cat._count?.products !== undefined && (
@@ -131,11 +129,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
                       size: isSelected ? undefined : size,
                     })
                   }
-                  className={`px-3 py-1.5 text-xs rounded-sm border transition-all ${
-                    isSelected
+                  className={`px-3 py-1.5 text-xs rounded-sm border transition-all ${isSelected
                       ? 'bg-vastra-charcoal text-white border-vastra-charcoal'
                       : 'bg-white border-vastra-border text-vastra-charcoal hover:border-vastra-charcoal'
-                  }`}
+                    }`}
                 >
                   {size}
                 </button>
@@ -163,11 +160,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
                       colour: isSelected ? undefined : c.name,
                     })
                   }
-                  className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded-sm transition-colors ${
-                    isSelected
+                  className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded-sm transition-colors ${isSelected
                       ? 'bg-vastra-surface text-vastra-terracotta font-semibold'
                       : 'text-vastra-charcoal hover:bg-vastra-surface'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2">
                     <span

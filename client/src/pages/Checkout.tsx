@@ -84,7 +84,7 @@ export const Checkout: React.FC = () => {
             setPostalCode(defaultShip.postalCode);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [isAuthenticated, user]);
 
@@ -269,11 +269,10 @@ export const Checkout: React.FC = () => {
                 {savedAddresses.map((addr) => (
                   <label
                     key={addr.id}
-                    className={`block p-3 border rounded-sm cursor-pointer text-xs transition-colors ${
-                      selectedAddressId === addr.id
+                    className={`block p-3 border rounded-sm cursor-pointer text-xs transition-colors ${selectedAddressId === addr.id
                         ? 'border-vastra-terracotta bg-vastra-terracotta-light/40'
                         : 'border-vastra-border hover:bg-vastra-surface'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-start gap-3">
                       <input
@@ -297,11 +296,10 @@ export const Checkout: React.FC = () => {
                 ))}
 
                 <label
-                  className={`block p-3 border rounded-sm cursor-pointer text-xs transition-colors ${
-                    selectedAddressId === 'new'
+                  className={`block p-3 border rounded-sm cursor-pointer text-xs transition-colors ${selectedAddressId === 'new'
                       ? 'border-vastra-terracotta bg-vastra-terracotta-light/40'
                       : 'border-vastra-border hover:bg-vastra-surface'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <input
@@ -421,11 +419,10 @@ export const Checkout: React.FC = () => {
 
             <div className="space-y-3">
               <label
-                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
-                  paymentMethod === 'ONLINE_GATEWAY'
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${paymentMethod === 'ONLINE_GATEWAY'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -451,11 +448,10 @@ export const Checkout: React.FC = () => {
               </label>
 
               <label
-                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
-                  paymentMethod === 'SIMULATED_UPI'
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${paymentMethod === 'SIMULATED_UPI'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -478,11 +474,10 @@ export const Checkout: React.FC = () => {
               </label>
 
               <label
-                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
-                  paymentMethod === 'SIMULATED_CARD'
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${paymentMethod === 'SIMULATED_CARD'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -505,11 +500,10 @@ export const Checkout: React.FC = () => {
               </label>
 
               <label
-                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
-                  paymentMethod === 'SIMULATED_NET_BANKING'
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${paymentMethod === 'SIMULATED_NET_BANKING'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -532,11 +526,10 @@ export const Checkout: React.FC = () => {
               </label>
 
               <label
-                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${
-                  paymentMethod === 'CASH_ON_DELIVERY'
+                className={`flex items-start gap-3 p-3.5 border rounded-sm cursor-pointer transition-colors ${paymentMethod === 'CASH_ON_DELIVERY'
                     ? 'border-vastra-terracotta bg-vastra-terracotta-light/30 ring-1 ring-vastra-terracotta'
                     : 'border-vastra-border hover:bg-vastra-surface'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -727,11 +720,10 @@ export const Checkout: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setGatewaySubMethod('upi')}
-                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
-                        gatewaySubMethod === 'upi'
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${gatewaySubMethod === 'upi'
                           ? 'bg-vastra-terracotta text-white'
                           : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
-                      }`}
+                        }`}
                     >
                       <Smartphone className="w-3.5 h-3.5" />
                       <span>UPI</span>
@@ -739,11 +731,10 @@ export const Checkout: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setGatewaySubMethod('card')}
-                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
-                        gatewaySubMethod === 'card'
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${gatewaySubMethod === 'card'
                           ? 'bg-vastra-terracotta text-white'
                           : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
-                      }`}
+                        }`}
                     >
                       <CreditCard className="w-3.5 h-3.5" />
                       <span>Cards</span>
@@ -751,11 +742,10 @@ export const Checkout: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setGatewaySubMethod('qr')}
-                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${
-                        gatewaySubMethod === 'qr'
+                      className={`py-2 text-xs font-semibold rounded-xs transition-colors flex items-center justify-center gap-1.5 ${gatewaySubMethod === 'qr'
                           ? 'bg-vastra-terracotta text-white'
                           : 'bg-vastra-surface text-vastra-charcoal hover:bg-stone-100'
-                      }`}
+                        }`}
                     >
                       <QrCode className="w-3.5 h-3.5" />
                       <span>Scan QR</span>

@@ -200,11 +200,10 @@ export const ProductDetail: React.FC = () => {
                 <button
                   key={img.id}
                   onClick={() => setSelectedImage(img.url)}
-                  className={`relative w-20 h-24 rounded-sm overflow-hidden border-2 shrink-0 transition-all ${
-                    selectedImage === img.url
+                  className={`relative w-20 h-24 rounded-sm overflow-hidden border-2 shrink-0 transition-all ${selectedImage === img.url
                       ? 'border-vastra-terracotta scale-95 shadow-xs'
                       : 'border-transparent hover:border-vastra-border'
-                  }`}
+                    }`}
                 >
                   <ImageWithFallback
                     src={img.url}
@@ -269,11 +268,10 @@ export const ProductDetail: React.FC = () => {
                     <button
                       key={colourName}
                       onClick={() => setSelectedColour(colourName)}
-                      className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border text-xs font-medium transition-all ${
-                        isSelected
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border text-xs font-medium transition-all ${isSelected
                           ? 'border-vastra-charcoal bg-vastra-surface ring-1 ring-vastra-charcoal'
                           : 'border-vastra-border hover:border-vastra-charcoal bg-white'
-                      }`}
+                        }`}
                     >
                       <span
                         className="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs"
@@ -309,13 +307,12 @@ export const ProductDetail: React.FC = () => {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       disabled={!isAvailable}
-                      className={`min-w-12 px-3.5 py-2 text-xs font-semibold rounded-sm border transition-all ${
-                        isSelected
+                      className={`min-w-12 px-3.5 py-2 text-xs font-semibold rounded-sm border transition-all ${isSelected
                           ? 'bg-vastra-charcoal text-white border-vastra-charcoal'
                           : isAvailable
-                          ? 'bg-white border-vastra-border text-vastra-charcoal hover:border-vastra-charcoal'
-                          : 'bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed'
-                      }`}
+                            ? 'bg-white border-vastra-border text-vastra-charcoal hover:border-vastra-charcoal'
+                            : 'bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed'
+                        }`}
                     >
                       {size}
                     </button>
@@ -437,41 +434,37 @@ export const ProductDetail: React.FC = () => {
         <div className="flex border-b border-vastra-border overflow-x-auto space-x-8">
           <button
             onClick={() => setActiveTab('desc')}
-            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${
-              activeTab === 'desc'
+            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${activeTab === 'desc'
                 ? 'text-vastra-terracotta after:absolute after:bottom-0 after:inset-x-0 after:h-0.5 after:bg-vastra-terracotta'
                 : 'text-vastra-muted hover:text-vastra-charcoal'
-            }`}
+              }`}
           >
             The Artisan Story
           </button>
           <button
             onClick={() => setActiveTab('material')}
-            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${
-              activeTab === 'material'
+            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${activeTab === 'material'
                 ? 'text-vastra-terracotta after:absolute after:bottom-0 after:inset-x-0 after:h-0.5 after:bg-vastra-terracotta'
                 : 'text-vastra-muted hover:text-vastra-charcoal'
-            }`}
+              }`}
           >
             Natural Material
           </button>
           <button
             onClick={() => setActiveTab('care')}
-            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${
-              activeTab === 'care'
+            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${activeTab === 'care'
                 ? 'text-vastra-terracotta after:absolute after:bottom-0 after:inset-x-0 after:h-0.5 after:bg-vastra-terracotta'
                 : 'text-vastra-muted hover:text-vastra-charcoal'
-            }`}
+              }`}
           >
             Care Instructions
           </button>
           <button
             onClick={() => setActiveTab('shipping')}
-            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${
-              activeTab === 'shipping'
+            className={`pb-4 text-sm font-semibold tracking-wide uppercase transition-colors relative ${activeTab === 'shipping'
                 ? 'text-vastra-terracotta after:absolute after:bottom-0 after:inset-x-0 after:h-0.5 after:bg-vastra-terracotta'
                 : 'text-vastra-muted hover:text-vastra-charcoal'
-            }`}
+              }`}
           >
             Shipping & Returns
           </button>

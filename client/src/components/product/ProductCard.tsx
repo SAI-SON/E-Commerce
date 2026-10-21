@@ -186,9 +186,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           aria-label="Wishlist"
         >
           <Heart
-            className={`w-4 h-4 transition-colors ${
-              inWishlist ? 'fill-red-600 text-red-600' : ''
-            }`}
+            className={`w-4 h-4 transition-colors ${inWishlist ? 'fill-red-600 text-red-600' : ''
+              }`}
           />
         </button>
 

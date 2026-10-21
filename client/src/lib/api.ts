@@ -1,4 +1,9 @@
-const API_BASE = '/api/v1';
+const rawApiUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+const API_BASE = rawApiUrl
+  ? rawApiUrl.endsWith('/api/v1')
+    ? rawApiUrl
+    : `${rawApiUrl}/api/v1`
+  : '/api/v1';
 
 export function getGuestSessionId(): string {
   let guestId = localStorage.getItem('vastra_guest_session_id');
